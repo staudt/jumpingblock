@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"c:\\\\git\\\\jumpingblock\" /s)",
+      "Bash(git init)"
+    ]
+  }
+}

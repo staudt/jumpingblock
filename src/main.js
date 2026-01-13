@@ -1,4 +1,4 @@
-import { initInput, updateInput, input } from './input.js';
+import { initInput, updateInput, input, getTouchButtonRect } from './input.js';
 import { player, resetPlayer, bufferJump, tryExecuteJump, updatePlayer } from './player.js';
 import { testLevel, getGroundYAtX } from './level.js';
 import { getMode, CubeRunner } from './modes.js';

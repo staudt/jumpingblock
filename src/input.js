@@ -15,6 +15,15 @@ let jumpDownPrev = false;
 let jumpPressedThisFrame = false; // Latched until consumed
 let debugToggledThisFrame = false;
 
+// Touch tracking for mobile
+let touchActive = false;
+const TOUCH_BUTTON_SIZE = 80;    // Size of touch button in pixels
+let touchButtonRect = { x: 0, y: 0, w: TOUCH_BUTTON_SIZE, h: TOUCH_BUTTON_SIZE };
+
+export function getTouchButtonRect() {
+    return touchButtonRect;
+}
+
 // =============================================================================
 // Input Handlers
 // =============================================================================
@@ -53,6 +62,22 @@ function onMouseUp(e) {
     }
 }
 
+function onTouchStart(e) {
+    // Jump on any touch anywhere on screen
+    e.preventDefault();
+    if (!jumpDown) {
+        jumpPressedThisFrame = true; // Latch the press
+    }
+    jumpDown = true;
+}
+
+function onTouchEnd(e) {
+    // Any touch ending means jump releases
+    if (e.touches.length === 0) {
+        jumpDown = false;
+    }
+}
+
 // =============================================================================
 // Initialization
 // =============================================================================
@@ -62,6 +87,20 @@ export function initInput() {
     window.addEventListener('keyup', onKeyUp);
     window.addEventListener('mousedown', onMouseDown);
     window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('touchstart', onTouchStart, false);
+    window.addEventListener('touchend', onTouchEnd, false);
+
+    // Position touch button in bottom-right corner
+    updateTouchButtonPosition();
+    window.addEventListener('resize', updateTouchButtonPosition);
+}
+
+function updateTouchButtonPosition() {
+    const padding = 16; // pixels from edge
+    touchButtonRect.x = window.innerWidth - TOUCH_BUTTON_SIZE - padding;
+    touchButtonRect.y = window.innerHeight - TOUCH_BUTTON_SIZE - padding;
+    touchButtonRect.w = TOUCH_BUTTON_SIZE;
+    touchButtonRect.h = TOUCH_BUTTON_SIZE;
 }
 
 // =============================================================================

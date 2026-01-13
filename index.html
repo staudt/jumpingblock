@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=landscape">
     <title>Jumping Block</title>
     <style>
         * {
@@ -15,6 +15,20 @@
             height: 100%;
             overflow: hidden;
             background: #1a1a2e;
+        }
+        @supports (aspect-ratio: 1) {
+            body {
+                /* Force landscape aspect ratio */
+                aspect-ratio: auto;
+            }
+        }
+        @media (orientation: portrait) {
+            html, body {
+                transform: rotate(90deg);
+                transform-origin: center;
+                width: 100vh;
+                height: 100vw;
+            }
         }
         canvas {
             display: block;
